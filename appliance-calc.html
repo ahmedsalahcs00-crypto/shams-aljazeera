@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الأجهزة التفصيلية | شمس الجزيرة</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#1A2930">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <script>try{if(localStorage.getItem('isLoggedIn')!=='true'){localStorage.setItem('sj_redirect',JSON.stringify(location.pathname.split('/').pop()||'index.html'));location.replace('login.html');}}catch(e){}</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+    <noscript>
+      <div class="noscript-bar">يتطلب هذا الموقع تفعيل JavaScript لعمل الحاسبة وتسجيل الدخول.</div>
+    </noscript>
+    <header class="site-header" id="siteHeader">
+      <div class="container navbar">
+        <a href="index.html" class="brand" aria-label="شمس الجزيرة لحلول الطاقة - الرئيسية"><img src="images/logo.png" class="brand-logo" width="48" height="48" alt="شعار شمس الجزيرة"><span class="brand-name">شمس الجزيرة<small>لحلول الطاقة المتكاملة</small></span></a>
+        <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+          <a href="index.html">الرئيسية</a>
+          <a href="index.html#services">خدماتنا</a>
+          <a href="knowledge.html">المكتبة التقنية</a>
+          <a href="calculator.html" class="is-active" aria-current="page">حاسبة الأحمال</a>
+          <a href="index.html#contact">تواصل معنا</a>
+        </nav>
+        <div class="nav-actions">
+          <a href="login.html" class="btn btn-secondary btn-sm">تسجيل الدخول</a>
+          <a href="calculator.html" class="btn btn-primary btn-sm">احسب نظامك الآن</a>
+        </div>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+      </div>
+    </header>
+    <main id="main" class="form-shell">
+      <div class="form-card form-card--wide">
+        <div class="form-head">
+          <h1>حاسبة الأجهزة التفصيلية</h1>
+          <p class="form-hint">أضف أجهزتك الكهربائية واحداً تلو الآخر، وسيحسب النظام القدرة الإجمالية لتنتقل بها إلى الحاسبة الرئيسية.</p>
+        </div>
+        <div class="add-box">
+          <div class="add-row">
+            <div class="form-group">
+              <label for="applianceSelect">الجهاز</label>
+              <select id="applianceSelect" class="form-control"><option value="" disabled selected>اختر من القائمة</option><option value="led" data-watts="12">لمبة ليد (LED)</option><option value="fan" data-watts="75">مروحة سقف / استاند</option><option value="laptop" data-watts="65">لابتوب مع الشاحن</option><option value="tv" data-watts="100">شاشة تلفزيون + ريسيفر</option><option value="fridge1" data-watts="150">ثلاجة صغيرة (باب واحد)</option><option value="fridge2" data-watts="250">ثلاجة كبيرة / ديب فريزر</option><option value="pump" data-watts="400">موتور ماء (نصف حصان)</option><option value="washer" data-watts="400">غسالة ملابس عادية</option><option value="ac" data-watts="1200">مكيف اسبليت (12 ألف وحدة)</option><option value="iron" data-watts="1500">مكواة ملابس</option><option value="custom">جهاز آخر (إدخال يدوي)</option></select>
+            </div>
+            <div class="form-group">
+              <label for="applianceWatts">القدرة (واط)</label>
+              <input type="number" id="applianceWatts" class="form-control" placeholder="الواط" min="1">
+            </div>
+            <div class="form-group">
+              <label for="applianceQty">العدد</label>
+              <input type="number" id="applianceQty" class="form-control" value="1" min="1">
+            </div>
+            <button type="button" id="addApplianceBtn" class="btn btn-primary"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M12 5v14M5 12h14"/></svg> إضافة</button>
+          </div>
+          <span class="form-hint">القدرات المعروضة تقديرية؛ يُفضّل قراءة القدرة من لوحة بيانات الجهاز. الأجهزة ذات المحركات (المضخات والمكيفات والثلاجات) تسحب تيار إقلاع أعلى، ويغطيه هامش الأمان 25% في الحاسبة الرئيسية.</span>
+          <div class="msg" id="addError" role="alert"></div>
+        </div>
+        <div class="table-wrap">
+          <table class="result-table">
+            <caption class="visually-hidden">الأجهزة المضافة</caption>
+            <thead>
+              <tr>
+                <th scope="col">الجهاز</th>
+                <th scope="col">القدرة للقطعة (واط)</th>
+                <th scope="col">العدد</th>
+                <th scope="col">إجمالي السحب (واط)</th>
+                <th scope="col">إجراء</th>
+              </tr>
+            </thead>
+            <tbody id="appliancesTableBody"></tbody>
+          </table>
+        </div>
+        <div class="total-bar">
+          <div>
+            <small>إجمالي الأحمال المحسوبة</small>
+            <strong id="grandTotalWatts" class="ltr">0</strong>
+            <small class="inline">واط</small>
+          </div>
+          <button type="button" id="exportLoadBtn" class="btn btn-primary btn-lg">اعتماد الأحمال وتصميم النظام <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M19 12H5m6-6-6 6 6 6"/></svg></button>
+        </div>
+      </div>
+    </main>
+    <footer class="site-footer" id="contact">
+      <div class="container footer-inner">
+        <div class="footer-col">
+          <h4>شمس الجزيرة لحلول الطاقة</h4>
+          <p>شركة هندسية متخصصة في تصميم وتركيب أنظمة الطاقة الشمسية للمنازل والمزارع والمنشآت التجارية.</p>
+        </div>
+        <div class="footer-col">
+          <h4>الخدمات</h4>
+          <ul>
+            <li><a href="index.html#services">الإنفرترات</a></li>
+            <li><a href="index.html#pumps">مضخات الري</a></li>
+            <li><a href="calculator.html">حاسبة الأحمال</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الموارد</h4>
+          <ul>
+            <li><a href="knowledge.html">المكتبة التقنية</a></li>
+            <li><a href="login.html">تسجيل الدخول</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>تواصل معنا</h4>
+          <ul>
+            <li><a href="tel:+249912345678" class="ltr mono">+249 91 234 5678</a></li>
+            <li><a href="mailto:info@shams-aljazeera.sd">info@shams-aljazeera.sd</a></li>
+            <li>السودان — ولاية الجزيرة، ود مدني</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 شمس الجزيرة لحلول الطاقة. جميع الحقوق محفوظة.</span>
+        <span>تصميم وتطوير هندسي داخلي</span>
+      </div>
+    </footer>
+    <a class="float-contact no-print" href="https://wa.me/249912345678" target="_blank" rel="noopener" aria-label="مراسلة شمس الجزيرة عبر واتساب"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>مراسلة عبر واتساب</span></a>
+    <script src="calc.js"></script>
+  </body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التقرير الهندسي للمنظومة | شمس الجزيرة</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#1A2930">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <script>try{if(localStorage.getItem('isLoggedIn')!=='true'){localStorage.setItem('sj_redirect',JSON.stringify(location.pathname.split('/').pop()||'index.html'));location.replace('login.html');}}catch(e){}</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+    <noscript>
+      <div class="noscript-bar">يتطلب هذا الموقع تفعيل JavaScript لعمل الحاسبة وتسجيل الدخول.</div>
+    </noscript>
+    <header class="site-header" id="siteHeader">
+      <div class="container navbar">
+        <a href="index.html" class="brand" aria-label="شمس الجزيرة لحلول الطاقة - الرئيسية"><img src="images/logo.png" class="brand-logo" width="48" height="48" alt="شعار شمس الجزيرة"><span class="brand-name">شمس الجزيرة<small>لحلول الطاقة المتكاملة</small></span></a>
+        <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+          <a href="index.html">الرئيسية</a>
+          <a href="index.html#services">خدماتنا</a>
+          <a href="knowledge.html">المكتبة التقنية</a>
+          <a href="calculator.html" class="is-active" aria-current="page">حاسبة الأحمال</a>
+          <a href="index.html#contact">تواصل معنا</a>
+        </nav>
+        <div class="nav-actions">
+          <a href="login.html" class="btn btn-secondary btn-sm">تسجيل الدخول</a>
+          <a href="calculator.html" class="btn btn-primary btn-sm">احسب نظامك الآن</a>
+        </div>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+      </div>
+    </header>
+    <main id="main" class="doc-shell">
+      <div class="msg" id="reportError" role="alert"></div>
+      <article class="doc" id="report">
+        <header class="doc-head">
+          <div class="doc-brand">
+            <!-- ضع صورة الشعار في المسار images/logo.png -->
+            <img src="images/logo.png" class="brand-logo" width="48" height="48" alt="شعار شمس الجزيرة">
+            <div><strong>شمس الجزيرة لحلول الطاقة</strong><span>السودان — ولاية الجزيرة، ود مدني</span></div>
+          </div>
+          <div class="doc-title">
+            <h1>مقايسة هندسية مبدئية لنظام طاقة شمسية</h1>
+            <span class="doc-ref">Engineering Datasheet / IEC 62446</span>
+          </div>
+        </header>
+        <dl class="doc-meta">
+          <div>
+            <dt>العميل</dt>
+            <dd id="m-name">--</dd>
+          </div>
+          <div>
+            <dt>السكن / المدينة</dt>
+            <dd id="m-res">--</dd>
+          </div>
+          <div>
+            <dt>رقم الهاتف</dt>
+            <dd class="mono ltr" id="m-phone">--</dd>
+          </div>
+          <div>
+            <dt>البريد الإلكتروني</dt>
+            <dd class="ltr" id="m-email">--</dd>
+          </div>
+          <div>
+            <dt>الخدمة المختارة</dt>
+            <dd id="m-service">--</dd>
+          </div>
+          <div>
+            <dt>ملخص الحمل وساعات التشغيل</dt>
+            <dd id="m-load">--</dd>
+          </div>
+          <div>
+            <dt>تاريخ الإصدار</dt>
+            <dd class="mono ltr" id="m-date">--</dd>
+          </div>
+          <div>
+            <dt>رقم مرجع الوثيقة</dt>
+            <dd class="mono ltr" id="m-ref">--</dd>
+          </div>
+        </dl>
+        <div class="notice" id="voltNotice" role="note" hidden>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M12 4l10 17H2zM12 10v5M12 18v.01"/></svg>
+          <span><b>ملاحظة هندسية على النظام:</b><span id="voltNoticeText"></span></span>
+        </div>
+        <section class="doc-section" aria-labelledby="h-results">
+          <h2 id="h-results">النتائج الرئيسية</h2>
+          <div class="grid grid-4">
+            <div class="metric-card is-gold">
+              <span>حجم الإنفرتر</span>
+              <strong id="r-inv">--</strong>
+              <small id="r-inv-sub">--</small>
+            </div>
+            <div class="metric-card is-teal">
+              <span>سعة بنك البطاريات</span>
+              <strong id="r-bat-ah">--</strong>
+              <small id="r-bat-sub">--</small>
+            </div>
+            <div class="metric-card">
+              <span>الألواح الشمسية</span>
+              <strong id="r-pv-qty">--</strong>
+              <small id="r-pv-sub">--</small>
+            </div>
+            <div class="metric-card">
+              <span>جهد النظام النهائي</span>
+              <strong id="r-volt">--</strong>
+              <small id="r-volt-sub">--</small>
+            </div>
+          </div>
+        </section>
+        <section class="doc-section" aria-labelledby="h-basis">
+          <h2 id="h-basis">مدخلات التصميم وفرضياته</h2>
+          <div class="table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">البند</th>
+                  <th scope="col">القيمة</th>
+                </tr>
+              </thead>
+              <tbody id="basisBody"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="doc-section" aria-labelledby="h-bom">
+          <h2 id="h-bom">قائمة المعدات المقترحة</h2>
+          <div class="table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">البند</th>
+                  <th scope="col">المواصفات</th>
+                  <th scope="col">الكمية</th>
+                </tr>
+              </thead>
+              <tbody id="bomBody"></tbody>
+            </table>
+          </div>
+        </section>
+        <section class="doc-section" aria-labelledby="h-rec">
+          <h2 id="h-rec">التوصيات الفنية</h2>
+          <ul class="doc-list" id="recList"></ul>
+        </section>
+        <p class="doc-note">هذه مقايسة مبدئية مبنية على البيانات المدخلة وعلى فرضيات عامة لمتوسط الإشعاع الشمسي في السودان. لا تغني عن المعاينة الميدانية للموقع ودراسة الظل وتحديد مسارات الكابلات قبل اعتماد التصميم النهائي وعرض السعر.</p>
+      </article>
+      <div class="doc-actions no-print" id="reportActions">
+        <div class="group">
+          <a href="calculator.html" class="btn btn-outline"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M4 20h4L19 9l-4-4L4 16zM13 7l4 4"/></svg> حساب جديد</a>
+          <a href="https://wa.me/249912345678" id="waBtn" class="btn btn-outline" target="_blank" rel="noopener"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg> إرسال عبر واتساب</a>
+          <button type="button" id="printBtn" class="btn btn-outline"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M7 9V4h10v5M7 18H5a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2M7 14h10v7H7z"/></svg> طباعة الوثيقة / حفظ PDF</button>
+        </div>
+        <button type="button" id="quoteBtn" class="btn btn-success btn-lg"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M7 3h8l4 4v14H7zM15 3v4h4M10 12h6M10 16h6"/></svg> طلب عرض سعر رسمي</button>
+        <div class="msg" id="quoteStatus" role="status" style="width:100%"></div>
+      </div>
+    </main>
+    <footer class="site-footer" id="contact">
+      <div class="container footer-inner">
+        <div class="footer-col">
+          <h4>شمس الجزيرة لحلول الطاقة</h4>
+          <p>شركة هندسية متخصصة في تصميم وتركيب أنظمة الطاقة الشمسية للمنازل والمزارع والمنشآت التجارية.</p>
+        </div>
+        <div class="footer-col">
+          <h4>الخدمات</h4>
+          <ul>
+            <li><a href="index.html#services">الإنفرترات</a></li>
+            <li><a href="index.html#pumps">مضخات الري</a></li>
+            <li><a href="calculator.html">حاسبة الأحمال</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الموارد</h4>
+          <ul>
+            <li><a href="knowledge.html">المكتبة التقنية</a></li>
+            <li><a href="login.html">تسجيل الدخول</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>تواصل معنا</h4>
+          <ul>
+            <li><a href="tel:+249912345678" class="ltr mono">+249 91 234 5678</a></li>
+            <li><a href="mailto:info@shams-aljazeera.sd">info@shams-aljazeera.sd</a></li>
+            <li>السودان — ولاية الجزيرة، ود مدني</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 شمس الجزيرة لحلول الطاقة. جميع الحقوق محفوظة.</span>
+        <span>تصميم وتطوير هندسي داخلي</span>
+      </div>
+    </footer>
+    <a class="float-contact no-print" href="https://wa.me/249912345678" target="_blank" rel="noopener" aria-label="مراسلة شمس الجزيرة عبر واتساب"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>مراسلة عبر واتساب</span></a>
+    <script src="calc.js"></script>
+  </body>
+</html>

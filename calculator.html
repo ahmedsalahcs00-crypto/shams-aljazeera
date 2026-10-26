@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حاسبة الأحمال الهندسية | شمس الجزيرة</title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="theme-color" content="#1A2930">
+    <link rel="icon" href="favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <script>try{if(localStorage.getItem('isLoggedIn')!=='true'){localStorage.setItem('sj_redirect',JSON.stringify(location.pathname.split('/').pop()||'index.html'));location.replace('login.html');}}catch(e){}</script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">تخطَّ إلى المحتوى</a>
+    <noscript>
+      <div class="noscript-bar">يتطلب هذا الموقع تفعيل JavaScript لعمل الحاسبة وتسجيل الدخول.</div>
+    </noscript>
+    <header class="site-header" id="siteHeader">
+      <div class="container navbar">
+        <a href="index.html" class="brand" aria-label="شمس الجزيرة لحلول الطاقة - الرئيسية"><img src="images/logo.png" class="brand-logo" width="48" height="48" alt="شعار شمس الجزيرة"><span class="brand-name">شمس الجزيرة<small>لحلول الطاقة المتكاملة</small></span></a>
+        <nav class="nav-links" id="navLinks" aria-label="التنقل الرئيسي">
+          <a href="index.html">الرئيسية</a>
+          <a href="index.html#services">خدماتنا</a>
+          <a href="knowledge.html">المكتبة التقنية</a>
+          <a href="calculator.html" class="is-active" aria-current="page">حاسبة الأحمال</a>
+          <a href="index.html#contact">تواصل معنا</a>
+        </nav>
+        <div class="nav-actions">
+          <a href="login.html" class="btn btn-secondary btn-sm">تسجيل الدخول</a>
+          <a href="calculator.html" class="btn btn-primary btn-sm">احسب نظامك الآن</a>
+        </div>
+        <button type="button" class="nav-toggle" id="navToggle" aria-label="فتح القائمة" aria-expanded="false" aria-controls="navLinks"><span></span><span></span><span></span></button>
+      </div>
+    </header>
+    <main id="main" class="form-shell">
+      <div class="form-card form-card--wide">
+        <div class="form-head">
+          <h1>حاسبة الأحمال وتصميم المنظومة</h1>
+          <p class="form-hint">أدخل بيانات استهلاكك لنقوم بمطابقتها مع الأجهزة المتوفرة في السوق المحلي بدقة هندسية.</p>
+          <span class="service-chip" id="serviceChip" hidden><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.01"/></svg><span>الخدمة المختارة: <b id="serviceChipText"></b></span></span>
+        </div>
+        <form id="calcForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="loadInput">إجمالي الأحمال الفعلية (بالواط)</label>
+              <input type="number" id="loadInput" class="form-control" placeholder="مثال: 2500" required min="100">
+              <span class="form-hint">مجموع قدرة الأجهزة التي ستعمل في نفس الوقت</span>
+              <a href="appliance-calc.html" class="link-btn" style="display:inline-block;margin-top:.5rem;font-size:.85rem">لا تعرف أحمالك؟ احسبها بالتفصيل جهازاً جهازاً</a>
+            </div>
+            <div class="form-group">
+              <label for="hoursInput">ساعات التشغيل المطلوبة ليلاً</label>
+              <input type="number" id="hoursInput" class="form-control" placeholder="مثال: 8" required min="1" max="24">
+              <span class="form-hint">عدد ساعات اعتماد النظام على البطاريات ليلاً</span>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="voltageInput">جهد بنك البطاريات (فولت)</label>
+              <select id="voltageInput" class="form-control"><option value="12">12 فولت (أحمال خفيفة)</option><option value="24" selected>24 فولت (أحمال متوسطة)</option><option value="48">48 فولت (أحمال عالية ومنازل)</option></select>
+              <span class="form-hint">يرفع النظام الجهد تلقائياً إذا كان الحمل أكبر من الحد الآمن</span>
+            </div>
+            <div class="form-group">
+              <label for="dayHoursInput">ساعات الحمل النهاري المباشر</label>
+              <input type="number" id="dayHoursInput" class="form-control" value="5" min="0" max="12" step="0.5">
+              <span class="form-hint">ساعات تشغيل الأحمال أثناء الشمس (الافتراضي 5 ساعات)</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <span class="form-label" id="battLabel">نوع البطاريات المفضل</span>
+            <div class="segmented" role="radiogroup" aria-labelledby="battLabel">
+              <div>
+                <input type="radio" id="battLithium" name="battType" value="lithium" checked>
+                <label for="battLithium">ليثيوم</label>
+              </div>
+              <div>
+                <input type="radio" id="battTubular" name="battType" value="tubular">
+                <label for="battTubular">أنبوبية</label>
+              </div>
+              <div>
+                <input type="radio" id="battGel" name="battType" value="gel">
+                <label for="battGel">جل</label>
+              </div>
+            </div>
+          </div>
+          <div class="msg" id="calcError" role="alert"></div>
+          <button type="submit" class="btn btn-primary btn-block btn-lg mt-md"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg> احسب وصمّم النظام الهندسي</button>
+        </form>
+        <section class="history-box" id="historyBox" hidden aria-labelledby="historyTitle">
+          <h2 id="historyTitle">حساباتي السابقة</h2>
+          <div class="table-wrap">
+            <table class="result-table">
+              <thead>
+                <tr>
+                  <th scope="col">المرجع</th>
+                  <th scope="col">التاريخ</th>
+                  <th scope="col">الحمل</th>
+                  <th scope="col">الإنفرتر</th>
+                  <th scope="col">الجهد</th>
+                  <th scope="col">الألواح</th>
+                </tr>
+              </thead>
+              <tbody id="historyBody"></tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+    </main>
+    <footer class="site-footer" id="contact">
+      <div class="container footer-inner">
+        <div class="footer-col">
+          <h4>شمس الجزيرة لحلول الطاقة</h4>
+          <p>شركة هندسية متخصصة في تصميم وتركيب أنظمة الطاقة الشمسية للمنازل والمزارع والمنشآت التجارية.</p>
+        </div>
+        <div class="footer-col">
+          <h4>الخدمات</h4>
+          <ul>
+            <li><a href="index.html#services">الإنفرترات</a></li>
+            <li><a href="index.html#pumps">مضخات الري</a></li>
+            <li><a href="calculator.html">حاسبة الأحمال</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>الموارد</h4>
+          <ul>
+            <li><a href="knowledge.html">المكتبة التقنية</a></li>
+            <li><a href="login.html">تسجيل الدخول</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>تواصل معنا</h4>
+          <ul>
+            <li><a href="tel:+249912345678" class="ltr mono">+249 91 234 5678</a></li>
+            <li><a href="mailto:info@shams-aljazeera.sd">info@shams-aljazeera.sd</a></li>
+            <li>السودان — ولاية الجزيرة، ود مدني</li>
+          </ul>
+        </div>
+      </div>
+      <div class="container footer-bottom">
+        <span>© 2026 شمس الجزيرة لحلول الطاقة. جميع الحقوق محفوظة.</span>
+        <span>تصميم وتطوير هندسي داخلي</span>
+      </div>
+    </footer>
+    <a class="float-contact no-print" href="https://wa.me/249912345678" target="_blank" rel="noopener" aria-label="مراسلة شمس الجزيرة عبر واتساب"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true" width="20" height="20"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg><span>مراسلة عبر واتساب</span></a>
+    <script src="calc.js"></script>
+  </body>
+</html>
